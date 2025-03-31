@@ -107,18 +107,22 @@ order by year ASC
 --3. Find the names of all artists who have artworks in the 'Painting' category, and the number of artworks they have in this category.
 
 select a.Name as Artist_Name,Count(art.ArtworkId) as NumberOfArtworks,c.Name as CategoryName from Artists a 
-left join Artworks art on a.ArtistID=art.ArtistID join Categories c on c.CategoryID=art.CategoryID where c.Name='Painting'
+left join Artworks art on a.ArtistID=art.ArtistID 
+join Categories c on c.CategoryID=art.CategoryID where c.Name='Painting'
 group by a.ArtistID,a.Name,c.Name 
 
 
 --4. List the names of artworks from the 'Modern Art Masterpieces' exhibition, along with their artists and categories.
 
-select a.Name as ArtistName,c.Name as CategoryName,art.Title as TitleOfArtworks from Exhibitions e join ExhibitionArtworks ea on e.ExhibitionID=ea.ExhibitionID left join Artworks art on art.ArtworkId=ea.ArtworkId
+select a.Name as ArtistName,c.Name as CategoryName,art.Title as TitleOfArtworks from Exhibitions e 
+join ExhibitionArtworks ea on e.ExhibitionID=ea.ExhibitionID 
+join Artworks art on art.ArtworkId=ea.ArtworkId
 join Artists a on art.ArtistId=a.Artistid join Categories c on art.CategoryID=c.CategoryID where e.Title='Modern Art Masterpieces'
 
 --5. Find the artists who have more than two artworks in the gallery.
 
-select a.Name as Artist_Name,Count(art.ArtworkId) as NumberOfArtworks from Artists a Join Artworks art on a.ArtistID=art.ArtistID 
+select a.Name as Artist_Name,Count(art.ArtworkId) as NumberOfArtworks from Artists a 
+join Artworks art on a.ArtistID=art.ArtistID 
 group by a.ArtistID,a.Name having Count(art.ArtworkId)>2
 
 --6. Find the titles of artworks that were exhibited in both 'Modern Art Masterpieces' and 'Renaissance Art' exhibitions
@@ -136,17 +140,20 @@ AND art.ArtworkID IN (select ea.ArtworkID
 );
 --7. Find the total number of artworks in each category
 
-select c.Name as CategoryName,Count(art.ArtworkId) as NumberOfArtworks from Categories c left join Artworks art
+select c.Name as CategoryName,Count(art.ArtworkId) as NumberOfArtworks from Categories c 
+left join Artworks art
 on c.CategoryID = art.CategoryID group by c.Name 
 
 --8. List artists who have more than 3 artworks in the gallery.
 
-select a.Name as Artist_Name,Count(art.ArtworkId) as NumberOfArtworks from Artists a Join Artworks art on a.ArtistID=art.ArtistID 
+select a.Name as Artist_Name,Count(art.ArtworkId) as NumberOfArtworks from Artists a
+Join Artworks art on a.ArtistID=art.ArtistID 
 group by a.ArtistID,a.Name having Count(art.ArtworkId)>3
 
 --9. Find the artworks created by artists from a specific nationality (e.g., Spanish).
 
-select a.Name as Artist_Name, art.Title as TitleOfArtwork from Artists a Join Artworks art on a.ArtistID=art.ArtistID where Nationality='Spanish'
+select a.Name as Artist_Name, art.Title as TitleOfArtwork from Artists a
+Join Artworks art on a.ArtistID=art.ArtistID where Nationality='Spanish'
 group by a.ArtistID,a.Name,art.Title
 
 --10. List exhibitions that feature artwork by both Vincent van Gogh and Leonardo da Vinci.
@@ -170,7 +177,8 @@ where ea.ExhibitionID is null
 
 --12. List artists who have created artworks in all available categories.
  
-select a.ArtistID,a.Name as ArtistName from Artists a join Artworks art on a.ArtistID=art.ArtistID 
+select a.ArtistID,a.Name as ArtistName from Artists a 
+join Artworks art on a.ArtistID=art.ArtistID 
 join Categories c on c.CategoryID=art.CategoryID group by a.ArtistID, a.Name 
 Having COUNT(distinct art.CategoryID) = (Select COUNT(*) from Categories);
 
