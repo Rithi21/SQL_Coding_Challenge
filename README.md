@@ -1,3 +1,3 @@
-Coding Challenge SQL
+_Coding Challenge SQL_
 
-Virtual Art Gallery Shema DDL and DML
+_Virtual Art Gallery Shema DDL and DML_
