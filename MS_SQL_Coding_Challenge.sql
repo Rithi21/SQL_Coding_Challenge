@@ -44,44 +44,45 @@ create table ExhibitionArtworks (
 
 -- Insert sample data into the Artists table
 
-Insert into Artists (ArtistID, Name, Biography, Nationality) VALUES
+insert into Artists (ArtistID, Name, Biography, Nationality) VALUES
 (1, 'Pablo Picasso', 'Renowned Spanish painter and sculptor.', 'Spanish'),
 (2, 'Vincent van Gogh', 'Dutch post-impressionist painter.', 'Dutch'),
 (3, 'Leonardo da Vinci', 'Italian polymath of the Renaissance.', 'Italian');
 
 -- Insert sample data into the Categories table
 
-Insert into Categories (CategoryID, Name) VALUES
+insert into Categories (CategoryID, Name) VALUES
 (1, 'Painting'),
 (2, 'Sculpture'),
 (3, 'Photography');
 
 -- Insert sample data into the Artworks table
 
-Insert into Artworks (ArtworkID, Title, ArtistID, CategoryID, Year, Description, ImageURL) VALUES
+insert into Artworks (ArtworkID, Title, ArtistID, CategoryID, Year, Description, ImageURL) VALUES
 (1, 'Starry Night', 2, 1, 1889, 'A famous painting by Vincent van Gogh.', 'starry_night.jpg'),
 (2, 'Mona Lisa', 3, 1, 1503, 'The iconic portrait by Leonardo da Vinci.', 'mona_lisa.jpg'),
 (3, 'Guernica', 1, 1, 1937, 'Pablo Picasso''s powerful anti-war mural.', 'guernica.jpg');
 
 -- Insert sample data into the Exhibitions table
 
-Insert into Exhibitions (ExhibitionID, Title, StartDate, EndDate, Description) VALUES
+insert into Exhibitions (ExhibitionID, Title, StartDate, EndDate, Description) VALUES
 (1, 'Modern Art Masterpieces', '2023-01-01', '2023-03-01', 'A collection of modern art masterpieces.'),
 (2, 'Renaissance Art', '2023-04-01', '2023-06-01', 'A showcase of Renaissance art treasures.');
 
 -- Insert artworks into exhibitions
 
-Insert into ExhibitionArtworks (ExhibitionID, ArtworkID) VALUES
+insert into ExhibitionArtworks (ExhibitionID, ArtworkID) VALUES
 (1, 1),
 (1, 2),
 (1, 3),
 (2, 2);
 
 --some additional Insert statements
-Insert into Artworks (ArtworkID, Title, ArtistID, CategoryID, Year, Description, ImageURL) VALUES
+insert into Artworks (ArtworkID, Title, ArtistID, CategoryID, Year, Description, ImageURL) VALUES
 (4, 'IndiaFreedom', 2, 1, 1952,'A famous painting by Vincent van Gogh.','freedom.jpg'),
 (5, 'Force of Nature', 3, 2, 1937,'A Perfect Sculpture by Leonardo da Vinci.','Nature.jpg'),
-(6, 'WaterLily', 3, 3, 1927,'Natural Photography by Leonardo da Vinci.','lily.jpg')
+(6, 'WaterLily', 3, 3, 1927,'Natural Photography by Leonardo da Vinci.','lily.jpg'),
+(7,'Moonlight Forest',3,3,1932,'Photography by Leonardo da Vinci.','Moonlight.jpg')
 
 insert into ExhibitionArtworks (ExhibitionID, ArtworkID) VALUES
 (1, 4), 
@@ -187,7 +188,7 @@ where ea.ExhibitionID is null
 select a.ArtistID,a.Name as ArtistName from Artists a
 JOIN Artworks art on a.ArtistID=art.ArtistID 
 JOIN Categories c on c.CategoryID=art.CategoryID group by a.ArtistID, a.Name 
-Having COUNT(art.CategoryID) = (Select COUNT(*) from Categories);
+Having COUNT(DISTINCT art.CategoryID) = (Select COUNT(*) from Categories);
 
 --13. List the total number of artworks in each category.
 
